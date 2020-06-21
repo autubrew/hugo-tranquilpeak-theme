@@ -8,7 +8,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 <!--EXTERNAL SCRIPTS END-->
 <!--SCRIPTS-->
-<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+<script src="/js/script-ha93tym59ndldwnn4zbhdz4vfl0lehckl9oniqolswjcigdyd6xyik4d4t.min.js"></script>
 <!--SCRIPTS END-->
 {{ range .Site.Params.customJS }}
   {{ if isset . "src" }}
@@ -73,6 +73,25 @@ $(document).ready(function() {
     {{ end }}
   {{ end }}
 {{ end }}
+{{ if (ne .Params.comment false) -}}
+    <!-- valine -->
+    {{- if .Site.Params.valine.enable -}}
+        <script src='//unpkg.com/valine@1.4.14/dist/Valine.min.js'></script>
+        <script type="text/javascript">
+            new Valine({
+                el: '#vcomment',
+                appId: '{{ .Site.Params.valine.appId }}',
+                appKey: '{{ .Site.Params.valine.appKey }}',
+                notify: {{ .Site.Params.valine.notify }},
+                verify: {{ .Site.Params.valine.verify }},
+                avatar: '{{ .Site.Params.valine.avatar }}',
+                placeholder: '{{ .Site.Params.valine.placeholder }}',
+                visitor: {{ .Site.Params.valine.visitor }},
+                requiredFields: ['nick']
+            });
+        </script>
+    {{- end }}
+{{- end }}
 {{ if or .Params.math .Site.Params.math }}
   <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_CHTML-full" integrity="sha256-GhM+5JHb6QUzOQPXSJLEWP7R73CbkisjzK5Eyij4U9w=" crossorigin="anonymous"></script>
   <script type="text/x-mathjax-config">

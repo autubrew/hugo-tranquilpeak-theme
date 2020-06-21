@@ -41,6 +41,7 @@
             {{ end }}
           </div>
         </article>
+        {{ partial "comment.html" . }}
         {{ partial "footer.html" . }}
       </div>
       <div id="bottom-bar" class="post-bottom-bar" data-behavior="{{ .Scratch.Get "sidebarBehavior" }}">

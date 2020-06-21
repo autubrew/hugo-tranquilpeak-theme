@@ -1,0 +1,6 @@
+{{ if (ne .Params.comment false) -}}
+    <!-- valine -->
+    {{- if .Site.Params.valine.enable -}}
+        <div id="vcomment" class="main-content-wrap"></div>
+    {{- end }}
+{{- end }}
