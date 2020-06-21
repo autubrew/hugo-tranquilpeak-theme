@@ -1,14 +1,27 @@
 <!--EXTERNAL SCRIPTS-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+{{- if .Site.Params.publicCDN.enable }}
+    {{ .Site.Params.publicCDN.jquery | safeHTML }}
+    {{ .Site.Params.publicCDN.fancybox | safeHTML }}
+{{- else -}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+{{- end -}}
 {{ if eq .Site.Params.syntaxHighlighter "highlight.js" }}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+    {{- if .Site.Params.publicCDN.enable }}
+        {{ .Site.Params.publicCDN.highlight | safeHTML }}
+    {{- else -}}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+    {{- end -}}
 {{ else if eq .Site.Params.syntaxHighlighter "prism.js" }}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.8.3/prism.min.js" integrity="sha256-haEv2ilTk2sXcJaGbkTtErRCHy/qGt3g+bGbgPf5OTY=" crossorigin="anonymous"></script>
+    {{- if .Site.Params.publicCDN.enable }}
+        {{ .Site.Params.publicCDN.prism | safeHTML }}
+    {{- else -}}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.8.3/prism.min.js" integrity="sha256-haEv2ilTk2sXcJaGbkTtErRCHy/qGt3g+bGbgPf5OTY=" crossorigin="anonymous"></script>
+    {{- end -}}
 {{ end }}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 <!--EXTERNAL SCRIPTS END-->
 <!--SCRIPTS-->
-<script src="/js/script-ha93tym59ndldwnn4zbhdz4vfl0lehckl9oniqolswjcigdyd6xyik4d4t.min.js"></script>
+<script src="/js/script-l490yzglxwaozkvr3zesfrt1laayfkdihdzobq83b58xgehldinob3jcf.min.js"></script>
 <!--SCRIPTS END-->
 {{ range .Site.Params.customJS }}
   {{ if isset . "src" }}
@@ -76,7 +89,11 @@ $(document).ready(function() {
 {{ if (ne .Params.comment false) -}}
     <!-- valine -->
     {{- if .Site.Params.valine.enable -}}
-        <script src='//unpkg.com/valine@1.4.14/dist/Valine.min.js'></script>
+        {{- if .Site.Params.publicCDN.enable }}
+            {{ .Site.Params.publicCDN.Valine | safeHTML }}
+        {{- else -}}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/valine/1.4.14/Valine.min.js" integrity="sha256-fPqMAsW3FDt/rNyneSJ7HOpZNRs/O2rM016SU08JtCk=" crossorigin="anonymous"></script>
+        {{- end -}}
         <script type="text/javascript">
             new Valine({
                 el: '#vcomment',
@@ -93,7 +110,11 @@ $(document).ready(function() {
     {{- end }}
 {{- end }}
 {{ if or .Params.math .Site.Params.math }}
-  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_CHTML-full" integrity="sha256-GhM+5JHb6QUzOQPXSJLEWP7R73CbkisjzK5Eyij4U9w=" crossorigin="anonymous"></script>
+    {{- if .Site.Params.publicCDN.enable }}
+        {{ .Site.Params.publicCDN.mathjax | safeHTML }}
+    {{- else -}}
+        <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_CHTML-full" integrity="sha256-GhM+5JHb6QUzOQPXSJLEWP7R73CbkisjzK5Eyij4U9w=" crossorigin="anonymous"></script>
+    {{- end -}}
   <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
       CommonHTML: { linebreaks: { automatic: true } },
@@ -104,8 +125,13 @@ $(document).ready(function() {
 {{ end }}
 {{ with .Site.Params.algolia }}
   {{ if (isset . "appId") | and (isset . "apiKey") | and (isset . "indexName") }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment-with-locales.min.js" integrity="sha256-TbOIe++NbC9P3KTtUMJ5wcROlBdnRqrPleLdpPg3xxE=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/algoliasearch/3.24.5/algoliasearch.min.js" integrity="sha256-vUvLcn3X0cXhote4PNwW6d+fzjJR0hoD+yGFeVaElew=" crossorigin="anonymous"></script>
+    {{- if .Site.Params.publicCDN.enable }}
+        {{ .Site.Params.publicCDN.algoliasearch | safeHTML }}
+        {{ .Site.Params.publicCDN.moment | safeHTML }}
+    {{- else -}}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/algoliasearch/3.24.5/algoliasearch.min.js" integrity="sha256-vUvLcn3X0cXhote4PNwW6d+fzjJR0hoD+yGFeVaElew=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment-with-locales.min.js" integrity="sha256-TbOIe++NbC9P3KTtUMJ5wcROlBdnRqrPleLdpPg3xxE=" crossorigin="anonymous"></script>
+    {{- end -}}
     <script>
       var algoliaClient = algoliasearch('{{ .appId }}', '{{ .apiKey }}');
       var algoliaIndex = algoliaClient.initIndex('{{ .indexName }}');
