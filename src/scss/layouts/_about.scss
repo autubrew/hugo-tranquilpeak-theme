@@ -22,7 +22,7 @@
         margin:        15px auto;
         border-radius: 3px;
         padding:       30px 0;
-        @include prefix(box-shadow, 0 0 5px rgba(0, 0, 0, 0.50), 'webkit' 'moz');
+        @include prefix(box-shadow, 0 0 2px rgba(0, 0, 0, 0.10), 'webkit' 'moz');
 
         #about-btn-close {
             position: absolute;
